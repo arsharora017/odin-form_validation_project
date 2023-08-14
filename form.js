@@ -80,3 +80,44 @@ window.onload = () => {
   document.getElementById("Country").onchange = checkZIP;
   document.getElementById("ZIP").oninput = checkZIP;
 };
+
+// password validation
+
+const pwd = document.getElementById("password");
+const pwdError = document.querySelector("#pwdErrSpan");
+
+const cPwd = document.getElementById("cPassword");
+const cPwdError = document.querySelector("#cPwdErrSpan");
+
+function checkPassword() {
+  // at least one number, one lowercase and one uppercase letter
+  // at least six characters that are letters, numbers or the underscore
+  let re = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])\w{8,}$/;
+
+  if (pwd.validity.valueMissing) {
+    pwdError.textContent = "Fill the password please";
+    pwdError.style.display = "block";
+  } else if (!re.test(pwd.value)) {
+    pwdError.textContent =
+      "Password must contain at least eight characters, including uppercase, lowercase letters and numbers. ";
+    pwdError.style.display = "block";
+  } else {
+    pwdError.textContent = "";
+  }
+}
+
+// pwd.addEventListener("input", (event) => {
+//   checkPassword();
+// });
+
+//pwd form submit listener
+form.addEventListener("submit", () => {
+  if (!pwd.validity.valid) {
+    checkPassword();
+  }
+});
+
+//to actively check if there is input in
+window.onload = () => {
+  document.getElementById("password").oninput = checkPassword;
+};

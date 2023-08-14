@@ -30,12 +30,14 @@
           <span class="error" id="ZIPSpan" aria-live="polite"></span>
         </div>
         <div class="form-elements">
-          <label for="">Password</label>
-          <input type="password" />
+          <label for="password">Password</label>
+          <input type="password" id="password" required />
+          <span class="error" aria-live="polite" id="pwdErrSpan"></span>
         </div>
         <div class="form-elements">
-          <label for="">Confirm Password</label>
-          <input type="password" />
+          <label for="cPassword">Confirm Password</label>
+          <input type="password" id="cPassword" required />
+          <span class="error" aria-live="polite" id="cPwdErrSpan"></span>
         </div>
         <div class="form-elements">
           <input type="submit" id="submit" />
