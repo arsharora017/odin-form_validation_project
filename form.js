@@ -106,18 +106,28 @@ function checkPassword() {
   }
 }
 
-// pwd.addEventListener("input", (event) => {
-//   checkPassword();
-// });
+function confirmPassword() {
+  if (cPwd.value !== pwd.value || cPwd.value === "") {
+    cPwdError.textContent = "Password don't match!";
+    cPwdError.style.display = "block";
+  } else {
+    cPwdError.textContent = "";
+  }
+}
 
 //pwd form submit listener
-form.addEventListener("submit", () => {
-  if (!pwd.validity.valid) {
-    checkPassword();
-  }
+form.addEventListener("submit", (event) => {
+  // if (!pwd.validity.valid) {
+  //   checkPassword();
+  //   // confirmPassword();
+  // }
+  event.preventDefault();
+  checkPassword();
+  confirmPassword();
 });
 
 //to actively check if there is input in
 window.onload = () => {
   document.getElementById("password").oninput = checkPassword;
+  document.getElementById("cPassword").oninput = confirmPassword;
 };
