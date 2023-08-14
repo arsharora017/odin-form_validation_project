@@ -5,16 +5,7 @@ const errorSpan = document.querySelector("span");
 
 // check email validity
 
-email.addEventListener("input", (event) => {
-  if (email.validity.valid) {
-    emailError.textContent = "";
-    emailError.style.display = "none";
-  } else {
-    showError();
-  }
-});
-
-function showError() {
+function checkEmail() {
   if (email.validity.valueMissing) {
     //display message
     emailError.textContent = "Enter a valid email address";
@@ -25,15 +16,11 @@ function showError() {
   } else if (email.validity.tooShort) {
     emailError.textContent = `Email should be atleast ${email.minLength} characters`;
     emailError.style.display = "block";
+  } else if (email.validity.valid) {
+    emailError.textContent = "";
+    emailError.style.display = "none";
   }
 }
-
-form.addEventListener("submit", (event) => {
-  if (!email.validity.valid) {
-    showError();
-    event.preventDefault();
-  }
-});
 
 // ZIP validation
 function checkZIP() {
@@ -74,18 +61,13 @@ function checkZIP() {
   }
 }
 
-// we link it to the onchange event for the <select> and the oninput event for the <input>
-//this is important to load values
-window.onload = () => {
-  document.getElementById("Country").onchange = checkZIP;
-  document.getElementById("ZIP").oninput = checkZIP;
-};
-
 // password validation
 
+//main password input
 const pwd = document.getElementById("password");
 const pwdError = document.querySelector("#pwdErrSpan");
 
+//confirm password input
 const cPwd = document.getElementById("cPassword");
 const cPwdError = document.querySelector("#cPwdErrSpan");
 
@@ -115,19 +97,24 @@ function confirmPassword() {
   }
 }
 
-//pwd form submit listener
+//form submit listener
 form.addEventListener("submit", (event) => {
-  // if (!pwd.validity.valid) {
-  //   checkPassword();
-  //   // confirmPassword();
-  // }
   event.preventDefault();
+  checkEmail();
+  checkZIP();
   checkPassword();
   confirmPassword();
+  checkZIP();
 });
 
 //to actively check if there is input in
 window.onload = () => {
+  document.getElementById("mail").oninput = checkEmail;
+
+  // we link it to the onchange event for the <select> and the oninput event for the <input>
+  //this is important to load values - for ZIP
+  document.getElementById("Country").onchange = checkZIP;
+  document.getElementById("ZIP").oninput = checkZIP;
   document.getElementById("password").oninput = checkPassword;
   document.getElementById("cPassword").oninput = confirmPassword;
 };
